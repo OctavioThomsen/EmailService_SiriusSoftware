@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/EmailService_SiriusSoftware/Dockerfile
+/EmailService_SiriusSoftware/EmailService_SiriusSoftware.http

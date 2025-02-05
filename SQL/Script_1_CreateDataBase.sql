@@ -1,0 +1,5 @@
+USE MASTER
+GO
+
+CREATE DATABASE EmailServiceDB
+GO

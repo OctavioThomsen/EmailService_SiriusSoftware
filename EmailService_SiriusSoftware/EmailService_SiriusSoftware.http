@@ -1,0 +1,6 @@
+@EmailService_SiriusSoftware_HostAddress = http://localhost:5182
+
+GET {{EmailService_SiriusSoftware_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

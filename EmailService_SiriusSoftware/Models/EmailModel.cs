@@ -8,7 +8,6 @@ namespace EmailService_SiriusSoftware.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [JsonPropertyName("id_email")]
         public int IdEmail { get; set; }
         public string? Sender { get; set; }
         public string? Recipient { get; set; }

@@ -1,4 +1,6 @@
-﻿using EmailService_SiriusSoftware.Models;
+﻿using EmailService_SiriusSoftware.DbContextConfig;
+using EmailService_SiriusSoftware.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +10,9 @@ namespace EmailService_SiriusSoftware.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
-        private readonly AppDbContext.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public EmailController(AppDbContext.AppDbContext context)
+        public EmailController(AppDbContext context)
         {
             _context = context;
         }

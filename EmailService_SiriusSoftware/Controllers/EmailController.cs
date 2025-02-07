@@ -1,9 +1,10 @@
-﻿using EmailService_SiriusSoftware.DbContextConfig;
+﻿using EmailService_SiriusSoftware.Dtos;
 using EmailService_SiriusSoftware.Interfaces;
+using EmailService_SiriusSoftware.Mappers;
 using EmailService_SiriusSoftware.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
+
 
 namespace EmailService_SiriusSoftware.Controllers
 {
@@ -12,33 +13,48 @@ namespace EmailService_SiriusSoftware.Controllers
 //    [Authorize]
     public class EmailController : ControllerBase
     {
-        private readonly AppDbContext _context;
         private readonly IEmailService _emailService;
 
-        public EmailController(AppDbContext context, IEmailService emailService)
+        public EmailController(IEmailService emailService)
         {
-            _context = context;
             _emailService = emailService;
         }
 
         [HttpGet("GetEmails")]
-        public async Task<ActionResult<IEnumerable<EmailModel>>> GetEmails() 
+        public async Task<ActionResult<IEnumerable<EmailDto>>> GetEmails()
         {
-            return await _context.Email.ToListAsync();
+            try
+            {
+                IEnumerable<EmailModel> emails = await _emailService.GetEmails();
+
+                var emailDtos = emails.Select(email => email.ToEmailDto()).ToList();
+                return Ok(emailDtos);
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost("SendEmail")]
-        public async Task<IActionResult> SendEmail([FromBody] EmailModel email)
+        public async Task<IActionResult> SendEmail([FromBody] EmailDto emailDto)
         {
-            if (await _emailService.SendEmailAsync(email))
+            try
             {
-                email.SendStatus = "Sent";
-                _context.Email.Add(email);
-                await _context.SaveChangesAsync();
-                return Ok("Email sent successfully.");
-            }
-            return StatusCode(500, "All email providers failed.");
-        }
+                var email = emailDto.ToEmailModel();
 
+                if (await _emailService.SendEmailAsync(email))
+                {
+                    email.SendStatus = "Sent";
+                    await _emailService.AddEmailSended(email);
+                    return Ok("Email sent successfully.");
+                }
+                return StatusCode(400, "Error sending email.");
+            }
+            catch 
+            {
+                return StatusCode(500, "All email providers failed.");
+            }
+        }
     }
 }

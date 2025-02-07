@@ -2,6 +2,7 @@
 using EmailService_SiriusSoftware.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Diagnostics.Eventing.Reader;
 
 namespace EmailService_SiriusSoftware.Providers;
 public class SendGridProvider : IEmailProvider
@@ -19,11 +20,15 @@ public class SendGridProvider : IEmailProvider
         var client = new SendGridClient(_apiKey);
         var from = new EmailAddress("oti_thomsen98@hotmail.com", "Emisor Octavio");
         var subject = "Envío de prueba utilizando SendGrid";
-        var to = new EmailAddress("otithomsen99@gmail.com", "Receptor Octavio");
+        var to = new EmailAddress(email.Recipient, "Receptor Octavio");
         var plainTextContent = "Esto es una prueba de envío.";
-        var htmlContent = "Cuerpo del mail.";
+        var htmlContent = email.Body;
         var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
         var response = await client.SendEmailAsync(msg);
-        return response.StatusCode == System.Net.HttpStatusCode.Accepted;
+        if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
+        {   
+            return true;
+        }
+        return false;
     }
 }

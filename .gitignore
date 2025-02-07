@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /EmailService_SiriusSoftware/Dockerfile
 /EmailService_SiriusSoftware/EmailService_SiriusSoftware.http
 /.dockerignore
+/EmailService_SiriusSoftware/appsettings.json

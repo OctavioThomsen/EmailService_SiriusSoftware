@@ -1,7 +1,7 @@
 ﻿using EmailService_SiriusSoftware.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmailService_SiriusSoftware.AppDbContext
+namespace EmailService_SiriusSoftware.DbContextConfig
 {
     public class AppDbContext : DbContext
     {

@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /EmailService_SiriusSoftware/EmailService_SiriusSoftware.http
 /.dockerignore
 /EmailService_SiriusSoftware/appsettings.json
+/EmailService_SiriusSoftware/Migrations

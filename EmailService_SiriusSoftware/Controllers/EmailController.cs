@@ -8,6 +8,7 @@ namespace EmailService_SiriusSoftware.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmailController : ControllerBase
     {
         private readonly AppDbContext _context;

@@ -1,6 +1,7 @@
 using EmailService_SiriusSoftware.DbContextConfig;
 using EmailService_SiriusSoftware.Interfaces;
 using EmailService_SiriusSoftware.Models;
+using EmailService_SiriusSoftware.Providers;
 using EmailService_SiriusSoftware.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -45,6 +46,17 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
+var sendGridApiKey = builder.Configuration["SendGrid:ApiKey"];
+if (string.IsNullOrEmpty(sendGridApiKey))
+{
+    throw new ArgumentNullException("SendGrid:ApiKey", "The SendGrid API Key cannot be null or empty.");
+}
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IEmailProvider, SendGridProvider>();
+builder.Services.AddScoped<EmailService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

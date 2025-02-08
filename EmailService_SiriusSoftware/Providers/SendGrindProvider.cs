@@ -18,10 +18,10 @@ public class SendGridProvider : IEmailProvider
     public async Task<bool> SendEmailAsync(EmailModel email)
     {
         var client = new SendGridClient(_apiKey);
-        var from = new EmailAddress("oti_thomsen98@hotmail.com", "Emisor Octavio");
+        var from = new EmailAddress(email.Sender, "Emisor Octavio");
         var subject = "Envío de prueba utilizando SendGrid";
         var to = new EmailAddress(email.Recipient, "Receptor Octavio");
-        var plainTextContent = "Esto es una prueba de envío.";
+        var plainTextContent = email.Body;
         var htmlContent = email.Body;
         var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
         var response = await client.SendEmailAsync(msg);

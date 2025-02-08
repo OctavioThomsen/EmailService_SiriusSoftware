@@ -8,6 +8,7 @@ public static class EmailMapper
     {
         return new EmailModel
         {
+            IdEmail = dto.IdEmail,
             Sender = dto.Sender,
             Recipient = dto.Recipient,
             Body = dto.Body,
@@ -19,9 +20,21 @@ public static class EmailMapper
     {
         return new EmailDto
         {
-            Sender = model.Sender,
-            Recipient = model.Recipient,
-            Body = model.Body
+            IdEmail = model.IdEmail,
+            Sender = model.Sender ?? string.Empty,
+            Recipient = model.Recipient ?? string.Empty,
+            Body = model.Body ?? string.Empty
+        };
+    }
+
+    public static EmailModel ToEmailModel(this EmailRequestDto dto)
+    {
+        return new EmailModel
+        {
+            Sender = "oti_thomsen98@hotmail.com",
+            Recipient = dto.Recipient,
+            Body = dto.Body,
+            SendStatus = "Pending"
         };
     }
 }

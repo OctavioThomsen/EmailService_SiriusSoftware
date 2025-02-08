@@ -37,11 +37,11 @@ namespace EmailService_SiriusSoftware.Controllers
         }
 
         [HttpPost("SendEmail")]
-        public async Task<IActionResult> SendEmail([FromBody] EmailDto emailDto)
+        public async Task<IActionResult> SendEmail([FromBody] EmailRequestDto emailRequestDto)
         {
             try
             {
-                var email = emailDto.ToEmailModel();
+                var email = emailRequestDto.ToEmailModel();
 
                 if (await _emailService.SendEmailAsync(email))
                 {

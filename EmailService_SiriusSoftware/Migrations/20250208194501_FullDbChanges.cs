@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EmailService_SiriusSoftware.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentityTables : Migration
+    public partial class FullDbChanges : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,6 +58,7 @@ namespace EmailService_SiriusSoftware.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Sender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Recipient = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SendStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

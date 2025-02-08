@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmailService_SiriusSoftware.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250207063633_AddIdentityTables")]
-    partial class AddIdentityTables
+    [Migration("20250208194501_FullDbChanges")]
+    partial class FullDbChanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,6 +108,9 @@ namespace EmailService_SiriusSoftware.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdEmail");

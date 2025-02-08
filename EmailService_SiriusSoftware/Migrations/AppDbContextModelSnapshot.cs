@@ -107,6 +107,9 @@ namespace EmailService_SiriusSoftware.Migrations
                     b.Property<string>("Sender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("IdEmail");
 
                     b.ToTable("Email");

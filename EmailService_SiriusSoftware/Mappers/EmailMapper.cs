@@ -11,6 +11,7 @@ public static class EmailMapper
             IdEmail = dto.IdEmail,
             Sender = dto.Sender,
             Recipient = dto.Recipient,
+            Subject = dto.Subject,
             Body = dto.Body,
             SendStatus = "Pending"
         };
@@ -22,6 +23,7 @@ public static class EmailMapper
         {
             IdEmail = model.IdEmail,
             Sender = model.Sender ?? string.Empty,
+            Subject = model.Subject ?? string.Empty,
             Recipient = model.Recipient ?? string.Empty,
             Body = model.Body ?? string.Empty
         };
@@ -33,6 +35,7 @@ public static class EmailMapper
         {
             Sender = "oti_thomsen98@hotmail.com",
             Recipient = dto.Recipient,
+            Subject = dto.Subject,
             Body = dto.Body,
             SendStatus = "Pending"
         };

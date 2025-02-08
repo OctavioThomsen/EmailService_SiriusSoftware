@@ -49,6 +49,7 @@ namespace EmailService_SiriusSoftware.Controllers
                     await _emailService.AddEmailSended(email);
                     return Ok("Email sent successfully.");
                 }
+                email.SendStatus = "Error";
                 return StatusCode(400, "Error sending email.");
             }
             catch 

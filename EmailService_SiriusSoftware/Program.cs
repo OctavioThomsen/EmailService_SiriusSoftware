@@ -55,6 +55,7 @@ if (string.IsNullOrEmpty(sendGridApiKey))
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IEmailProvider, SendGridProvider>();
+builder.Services.AddScoped<IEmailProvider, MailgunProvider>();
 builder.Services.AddScoped<EmailService>();
 
 

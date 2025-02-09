@@ -13,5 +13,6 @@ namespace EmailService_SiriusSoftware.Models
         public string? Subject { get; set; }
         public string? Body { get; set; }
         public string? SendStatus { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

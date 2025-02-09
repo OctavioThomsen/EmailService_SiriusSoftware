@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmailService_SiriusSoftware.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250208194501_FullDbChanges")]
+    [Migration("20250209171729_FullDbChanges")]
     partial class FullDbChanges
     {
         /// <inheritdoc />
@@ -100,6 +100,9 @@ namespace EmailService_SiriusSoftware.Migrations
 
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Recipient")
                         .HasColumnType("nvarchar(max)");

@@ -98,6 +98,9 @@ namespace EmailService_SiriusSoftware.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Recipient")
                         .HasColumnType("nvarchar(max)");
 

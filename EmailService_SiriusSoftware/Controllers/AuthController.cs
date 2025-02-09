@@ -44,11 +44,11 @@ public class AuthController : ControllerBase
         if (result.Succeeded)
         {
             var appUser = await _userManager.FindByNameAsync(model.UserName);
-            var token = _tokenService.GenerateToken(model.UserName, appUser);
+            var roles = await _userManager.GetRolesAsync(appUser);
+            var token = _tokenService.GenerateToken(model.UserName, appUser, roles);
             return Ok(new { Token = token });
         }
 
         return Unauthorized();
     }
-
 }

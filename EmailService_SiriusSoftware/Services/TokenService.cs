@@ -15,7 +15,7 @@ public class TokenService : ITokenService
         _configuration = configuration;
     }
 
-    public string GenerateToken(string userName, ApplicationUser user)
+    public string GenerateToken(string userName, ApplicationUser user, IList<string> roles)
     {
         var jwtKey = _configuration["Jwt:Key"];
         if (string.IsNullOrEmpty(jwtKey))
@@ -23,12 +23,17 @@ public class TokenService : ITokenService
             throw new InvalidOperationException("JWT Key is not configured in appsettings.json");
         }
 
-        var claims = new[]
+        var claims = new List<Claim>
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, userName),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim("UserId", user.Id)
+    };
+
+        foreach (var role in roles)
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("UserId", user.Id)
-        };
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -1,4 +1,5 @@
 using EmailService_SiriusSoftware.DbContextConfig;
+using EmailService_SiriusSoftware.Helpers;
 using EmailService_SiriusSoftware.Interfaces;
 using EmailService_SiriusSoftware.Models;
 using EmailService_SiriusSoftware.Providers;
@@ -91,6 +92,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+await RoleHelper.EnsureRolesAndAdminUserAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {

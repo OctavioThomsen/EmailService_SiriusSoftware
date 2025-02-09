@@ -17,9 +17,29 @@ namespace EmailService_SiriusSoftware.Services
             _context = appDbContext;
         }
 
-        public async Task<IEnumerable<EmailModel>> GetEmails()
+        public async Task<Dictionary<string, int>> GetEmailStatsForToday()
         {
-            return await _context.Email.ToListAsync();
+            var today = DateTime.UtcNow.Date;
+
+            var stats = await _context.Email
+                .Where(e => e.CreatedDate.Date == today)
+                .GroupBy(e => e.IdUser)
+                .Select(g => new
+                {
+                    IdUser = g.Key,
+                    EmailCount = g.Count()
+                })
+                .ToListAsync();
+
+            var userIds = stats.Select(s => s.IdUser).ToList();
+
+            var userNames = await _context.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ToDictionaryAsync(u => u.Id, u => u.UserName ?? string.Empty);
+
+            return stats
+                .Where(s => userNames.ContainsKey(s.IdUser) && !string.IsNullOrEmpty(userNames[s.IdUser]))
+                .ToDictionary(s => userNames[s.IdUser]!, s => s.EmailCount);
         }
 
         public async Task<bool> SendEmailAsync(EmailModel email)
@@ -56,6 +76,5 @@ namespace EmailService_SiriusSoftware.Services
                 return false;
             }
         }
-
     }
 }

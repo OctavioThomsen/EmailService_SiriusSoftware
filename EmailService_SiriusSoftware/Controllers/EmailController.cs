@@ -19,21 +19,14 @@ namespace EmailService_SiriusSoftware.Controllers
             _emailService = emailService;
         }
 
-        [HttpGet("GetEmails")]
-        public async Task<ActionResult<IEnumerable<EmailDto>>> GetEmails()
+        [Authorize(Roles = "Admin")]
+        [HttpGet("stats")]
+        public async Task<IActionResult> GetStats()
         {
-            try
-            {
-                IEnumerable<EmailModel> emails = await _emailService.GetEmails();
-
-                var emailDtos = emails.Select(email => email.ToEmailDto()).ToList();
-                return Ok(emailDtos);
-            }
-            catch (Exception ex) 
-            {
-                return StatusCode(500, ex.Message);
-            }
+            var stats = await _emailService.GetEmailStatsForToday();
+            return Ok(stats);
         }
+
 
         [HttpPost("SendEmail")]
         public async Task<IActionResult> SendEmail([FromBody] EmailRequestDto emailRequestDto)

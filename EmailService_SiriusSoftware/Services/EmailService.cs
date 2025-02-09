@@ -1,4 +1,5 @@
 ﻿using EmailService_SiriusSoftware.DbContextConfig;
+using EmailService_SiriusSoftware.Helpers;
 using EmailService_SiriusSoftware.Interfaces;
 using EmailService_SiriusSoftware.Models;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,14 @@ namespace EmailService_SiriusSoftware.Services
 
         public async Task<bool> SendEmailAsync(EmailModel email)
         {
+            var emailLimitHelper = new EmailLimitHelper(_context);
+            bool hasExceededLimit = await emailLimitHelper.HasExceededDailyLimitAsync(email.IdUser, DateTime.UtcNow.AddHours(-3));
+
+            if (hasExceededLimit)
+            {
+                throw new InvalidOperationException("You have reached the daily email limit.");
+            }
+
             foreach (var provider in _providers)
             {
                 if (await provider.SendEmailAsync(email))
@@ -30,6 +39,7 @@ namespace EmailService_SiriusSoftware.Services
                     return true;
                 }
             }
+
             return false;
         }
 

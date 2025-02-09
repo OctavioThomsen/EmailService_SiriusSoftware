@@ -2,15 +2,14 @@
 using EmailService_SiriusSoftware.Interfaces;
 using EmailService_SiriusSoftware.Mappers;
 using EmailService_SiriusSoftware.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
 
 namespace EmailService_SiriusSoftware.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-//    [Authorize]
+    [Authorize]
     public class EmailController : ControllerBase
     {
         private readonly IEmailService _emailService;
@@ -42,6 +41,8 @@ namespace EmailService_SiriusSoftware.Controllers
             try
             {
                 var email = emailRequestDto.ToEmailModel();
+                email.IdUser = User.FindFirst("UserId")?.Value;
+
 
                 if (await _emailService.SendEmailAsync(email))
                 {
@@ -52,9 +53,9 @@ namespace EmailService_SiriusSoftware.Controllers
                 email.SendStatus = "Error";
                 return StatusCode(400, "Error sending email.");
             }
-            catch 
+            catch (Exception ex)
             {
-                return StatusCode(500, "All email providers failed.");
+                return StatusCode(500, $"All email providers failed. { ex.Message}");
             }
         }
     }

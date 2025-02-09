@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace EmailService_SiriusSoftware.Models
 {
@@ -8,7 +9,10 @@ namespace EmailService_SiriusSoftware.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdEmail { get; set; }
-        public string? IdUser { get; set; }
+        [Required]
+        public string IdUser { get; set; } = null!;
+        [ForeignKey(nameof(IdUser))]
+        public ApplicationUser User { get; set; } = null!;
         public string? Sender { get; set; }
         public string? Recipient { get; set; }
         public string? Subject { get; set; }

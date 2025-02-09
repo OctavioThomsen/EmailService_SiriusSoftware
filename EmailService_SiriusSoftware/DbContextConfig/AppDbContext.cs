@@ -12,6 +12,17 @@ namespace EmailService_SiriusSoftware.DbContextConfig
 
         public DbSet<EmailModel> Email { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<EmailModel>()
+                .HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.IdUser)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var argentinaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time");

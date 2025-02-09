@@ -102,7 +102,8 @@ namespace EmailService_SiriusSoftware.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("IdUser")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Recipient")
                         .HasColumnType("nvarchar(max)");
@@ -117,6 +118,8 @@ namespace EmailService_SiriusSoftware.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdEmail");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Email");
                 });
@@ -252,6 +255,17 @@ namespace EmailService_SiriusSoftware.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("EmailService_SiriusSoftware.Models.EmailModel", b =>
+                {
+                    b.HasOne("EmailService_SiriusSoftware.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

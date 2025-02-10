@@ -33,7 +33,6 @@ public static class EmailMapper
     {
         return new EmailModel
         {
-            Sender = "oti_thomsen98@hotmail.com",
             Recipient = dto.Recipient,
             Subject = dto.Subject,
             Body = dto.Body,

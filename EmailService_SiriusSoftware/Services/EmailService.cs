@@ -56,25 +56,21 @@ namespace EmailService_SiriusSoftware.Services
             {
                 if (await provider.SendEmailAsync(email))
                 {
+                    email.SendStatus = "Sent";
+                    await SaveEmail(email);
                     return true;
                 }
             }
-
-            return false;
+            email.SendStatus = "Error";
+            await SaveEmail(email);
+            throw new Exception("All email providers failed.");
         }
 
-        public async Task<bool> AddEmailSended(EmailModel email)
+        public async Task<bool> SaveEmail(EmailModel email)
         {
-            try
-            {
-                _context.Email.Add(email);
-                await _context.SaveChangesAsync();
-                return true; 
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            _context.Email.Add(email);
+            await _context.SaveChangesAsync();
+            return true; 
         }
     }
 }

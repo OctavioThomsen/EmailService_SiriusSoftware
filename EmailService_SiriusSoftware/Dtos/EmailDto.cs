@@ -1,20 +1,18 @@
-﻿using System.Text.Json.Serialization;
-
-namespace EmailService_SiriusSoftware.Dtos
+﻿namespace EmailService_SiriusSoftware.Dtos
 {
     public class EmailDto
     {
-        public int IdEmail { get; set; } = 0;
-        public string Sender { get; set; } = "oti_thomsen98@hotmail.com";
+        public Guid IdEmail { get; set; }
+        public string Sender { get; set; } = string.Empty;
         public string Recipient { get; set; } = string.Empty;
-        public string Subject { get; set; } = "Sin asunto";
+        public string Subject { get; set; } = string.Empty;
         public string Body { get; set; } = string.Empty;
     }
 
     public class EmailRequestDto
     {
         public string Recipient { get; set; } = string.Empty;
-        public string Subject { get; set; } = "Sin asunto";
+        public string Subject { get; set; } = string.Empty;
         public string Body { get; set; } = string.Empty;
     }
 }

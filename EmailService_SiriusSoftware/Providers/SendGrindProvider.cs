@@ -18,7 +18,7 @@ public class SendGridProvider : IEmailProvider
     public async Task<bool> SendEmailAsync(EmailModel email)
     {
         var client = new SendGridClient(_apiKey);
-        var from = new EmailAddress(email.Sender, "Octavio Thomsen");
+        var from = new EmailAddress(email.Sender, email.UserName);
         var subject = email.Subject;
         var to = new EmailAddress(email.Recipient);
         var plainTextContent = email.Body;

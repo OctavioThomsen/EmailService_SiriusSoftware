@@ -36,6 +36,5 @@ namespace EmailService_SiriusSoftware.DbContextConfig
             }
             return await base.SaveChangesAsync(cancellationToken);
         }
-
     }
 }

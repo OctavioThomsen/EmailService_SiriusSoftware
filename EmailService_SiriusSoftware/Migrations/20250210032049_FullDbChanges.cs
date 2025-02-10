@@ -160,9 +160,9 @@ namespace EmailService_SiriusSoftware.Migrations
                 name: "Email",
                 columns: table => new
                 {
-                    IdEmail = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdEmail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdUser = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Recipient = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),

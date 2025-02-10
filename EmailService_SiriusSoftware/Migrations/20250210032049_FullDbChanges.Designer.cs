@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmailService_SiriusSoftware.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250209204145_FullDbChanges")]
+    [Migration("20250210032049_FullDbChanges")]
     partial class FullDbChanges
     {
         /// <inheritdoc />
@@ -92,11 +92,9 @@ namespace EmailService_SiriusSoftware.Migrations
 
             modelBuilder.Entity("EmailService_SiriusSoftware.Models.EmailModel", b =>
                 {
-                    b.Property<int>("IdEmail")
+                    b.Property<Guid>("IdEmail")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEmail"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
@@ -118,6 +116,9 @@ namespace EmailService_SiriusSoftware.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdEmail");

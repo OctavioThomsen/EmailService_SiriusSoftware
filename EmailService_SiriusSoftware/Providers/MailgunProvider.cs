@@ -26,7 +26,7 @@ namespace EmailService_SiriusSoftware.Providers
             var client = new RestClient(options);
             var request = new RestRequest("messages", Method.Post);
 
-            request.AddParameter("from", $"Octavio Thomsen {email.Sender}");
+            request.AddParameter("from", $"{email.UserName} {email.Sender}");
             request.AddParameter("to", email.Recipient);
             request.AddParameter("subject", email.Subject);
             request.AddParameter("text", email.Body);

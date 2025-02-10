@@ -20,6 +20,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IEmailProvider, SendGridProvider>();
+builder.Services.AddScoped<IEmailProvider, MailgunProvider>();
+builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 var jwtKey = builder.Configuration["Jwt:Key"];
@@ -47,18 +51,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
-
-var sendGridApiKey = builder.Configuration["SendGrid:ApiKey"];
-if (string.IsNullOrEmpty(sendGridApiKey))
-{
-    throw new ArgumentNullException("SendGrid:ApiKey", "The SendGrid API Key cannot be null or empty.");
-}
-
-builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IEmailProvider, SendGridProvider>();
-builder.Services.AddScoped<IEmailProvider, MailgunProvider>();
-builder.Services.AddScoped<EmailService>();
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

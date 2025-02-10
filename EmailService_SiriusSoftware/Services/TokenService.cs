@@ -28,7 +28,8 @@ public class TokenService : ITokenService
     {
         new Claim(JwtRegisteredClaimNames.Sub, userName),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim("UserId", user.Id)
+        new Claim("UserId", user.Id),
+        new Claim("Email", user.Email)
     };
 
         claims.Add(new Claim("Roles", string.Join(";", roles)));

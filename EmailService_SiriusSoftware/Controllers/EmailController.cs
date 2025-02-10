@@ -1,7 +1,7 @@
 ﻿using EmailService_SiriusSoftware.Dtos;
+using EmailService_SiriusSoftware.Helpers;
 using EmailService_SiriusSoftware.Interfaces;
 using EmailService_SiriusSoftware.Mappers;
-using EmailService_SiriusSoftware.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,28 +27,21 @@ namespace EmailService_SiriusSoftware.Controllers
             return Ok(stats);
         }
 
-
         [HttpPost("SendEmail")]
         public async Task<IActionResult> SendEmail([FromBody] EmailRequestDto emailRequestDto)
         {
             try
             {
                 var email = emailRequestDto.ToEmailModel();
-                email.IdUser = User.FindFirst("UserId")?.Value;
+                UserHelper.CompleteEmailWithClaims(email, User);
+                
+                await _emailService.SendEmailAsync(email);
 
-
-                if (await _emailService.SendEmailAsync(email))
-                {
-                    email.SendStatus = "Sent";
-                    await _emailService.AddEmailSended(email);
-                    return Ok("Email sent successfully.");
-                }
-                email.SendStatus = "Error";
-                return StatusCode(400, "Error sending email.");
+                return Ok(email.ToEmailDto());
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"All email providers failed. { ex.Message}");
+                return BadRequest($"An error occurred: { ex.Message}");
             }
         }
     }

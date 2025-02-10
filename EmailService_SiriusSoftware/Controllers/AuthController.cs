@@ -27,13 +27,13 @@ public class AuthController : ControllerBase
 
             if (result.Succeeded)
             {
-                return Ok(new { Message = "User registered successfully" });
+                return Ok(new { Message = "User registered successfully." });
             }
 
             return BadRequest(result.Errors);
         }
 
-        return BadRequest("Invalid model");
+        return BadRequest("Invalid model.");
     }
 
     [HttpPost("login")]
@@ -49,6 +49,6 @@ public class AuthController : ControllerBase
             return Ok(new { Token = token });
         }
 
-        return Unauthorized();
+        return BadRequest("Invalid credentials.");
     }
 }

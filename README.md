@@ -13,22 +13,35 @@ Main Features:
 
 ## Utilities
 1. Runs a container named emailservice-container from the emailservice image, mapping port 8080 of the container to port 8080 on the host machine.
+```sh
 docker run -p 8080:8080 --name emailservice-container emailservice
+```
+
 
 2. Admin user:
+```sh
 {
   "userName": "admin",
   "password": "Admin123!"
 }
+```
 
 3. Deletes the Migrations folder and all its contents.
+```sh
 rm -r Migrations/
+```
 
 4. Drops the database forcefully, removing all data and schema.
+```sh
 dotnet ef database drop --force
+```
 
+```sh
 5. Creates a new migration named FullDbChanges, capturing schema changes.
 dotnet ef migrations add FullDbChanges
+```
 
 6. Applies the latest migrations to update the database schema.
+```sh
 dotnet ef database update
+```

@@ -2,6 +2,7 @@
 using EmailService_SiriusSoftware.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -30,10 +31,7 @@ public class TokenService : ITokenService
         new Claim("UserId", user.Id)
     };
 
-        foreach (var role in roles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
+        claims.Add(new Claim("Roles", string.Join(";", roles)));
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

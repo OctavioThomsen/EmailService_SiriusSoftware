@@ -17,8 +17,12 @@ Main Features:
 docker run -p 8080:8080 --name emailservice-container emailservice
 ```
 
+2. Builds the emailservice image using the Release configuration.
+```sh
+docker build --build-arg BUILD_CONFIGURATION=Release -t emailservice .
+```
 
-2. Admin user:
+3. Admin user:
 ```sh
 {
   "userName": "admin",
@@ -26,22 +30,22 @@ docker run -p 8080:8080 --name emailservice-container emailservice
 }
 ```
 
-3. Deletes the Migrations folder and all its contents.
+4. Deletes the Migrations folder and all its contents.
 ```sh
 rm -r Migrations/
 ```
 
-4. Drops the database forcefully, removing all data and schema.
+5. Drops the database forcefully, removing all data and schema.
 ```sh
 dotnet ef database drop --force
 ```
 
+6. Creates a new migration named FullDbChanges, capturing schema changes.
 ```sh
-5. Creates a new migration named FullDbChanges, capturing schema changes.
 dotnet ef migrations add FullDbChanges
 ```
 
-6. Applies the latest migrations to update the database schema.
+7. Applies the latest migrations to update the database schema.
 ```sh
 dotnet ef database update
 ```
